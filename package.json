@@ -1,0 +1,27 @@
+{
+  "name": "rename-multiple-files",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gillesheinesch/rename-multiple-files.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gillesheinesch/rename-multiple-files/issues"
+  },
+  "homepage": "https://github.com/gillesheinesch/rename-multiple-files#readme",
+  "dependencies": {
+    "chalk": "^5.0.0",
+    "cli-color": "^2.0.1",
+    "fs": "^0.0.1-security",
+    "moment": "^2.29.1",
+    "path": "^0.12.7",
+    "prompt-sync": "^4.2.0"
+  }
+}
