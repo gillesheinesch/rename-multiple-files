@@ -42,7 +42,9 @@ function modifyFiles_ACD(pathOfCustomer, nameOfCustomer, year) {
     fs.readdir(`${pathOfCustomer}/${year}/ACD`, (err, files) => {
         files.forEach(async fileName => {
             const fileNameWithoutextname = fileName.replace(/\.[^/.]+$/, "");
-            const splitFileName = fileNameWithoutextname.split(" ");
+            const splitFileName_edc = fileNameWithoutextname.split(" ");
+            const splitFileName_decompte = fileNameWithoutextname.split(" ");
+            console.log(splitFileName_decompte)
 
             // Rename avances
             const avances_conditions = ['avance', 'avances', 'advance', 'd\'avance', 'd\'avances'];
@@ -55,7 +57,7 @@ function modifyFiles_ACD(pathOfCustomer, nameOfCustomer, year) {
                     const oldFileName = `${nameOfCustomer}/${year}/ACD/${fileName}`
                     const newFileName = `${nameOfCustomer}/${year}/ACD/${nameOfCustomer} - ACD Avances ${year}${pathext}`
 
-                    
+
                     await fs.rename(oldFilePath, newFilePath, async function (err) {
                         if (err) console.log('ERROR: ' + err);
                         console.log(clc.red(oldFileName) + " --> " + clc.green(newFileName));
@@ -69,60 +71,61 @@ function modifyFiles_ACD(pathOfCustomer, nameOfCustomer, year) {
             const edc_conditions = ['edc', 'extrait', 'ext'];
             if (edc_conditions.some(condition => fileName.toLowerCase().includes(condition))) {
                 let correctDate;
-                await splitFileName.forEach(index => {
-                    if (moment(index, ['YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY'], true)) {
+                await splitFileName_edc.forEach(index => {
+                    if (moment(index, ['YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY'], true).isValid()) {
                         correctDate = moment(index, ['YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY'], true).format('YYYY.MM.DD')
                     }
                 })
                 if (correctDate) {
-                const pathext = await path.extname(`${pathOfCustomer}/${year}/ACD/${fileName}`);
-                if (fileName !== `${nameOfCustomer} - ACD EDC - ${correctDate}${pathext}`) {
-                    const oldFilePath = `${pathOfCustomer}/${year}/ACD/${fileName}`
-                    const newFilePath = `${pathOfCustomer}/${year}/ACD/${nameOfCustomer} - ACD EDC - ${correctDate}${pathext}`
-                    const oldFileName = `${nameOfCustomer}/${year}/ACD/${fileName}`
-                    const newFileName = `${nameOfCustomer}/${year}/ACD/${nameOfCustomer} - ACD EDC - ${correctDate}${pathext}`
+                    const pathext = await path.extname(`${pathOfCustomer}/${year}/ACD/${fileName}`);
+                    if (fileName !== `${nameOfCustomer} - ACD EDC - ${correctDate}${pathext}`) {
+                        const oldFilePath = `${pathOfCustomer}/${year}/ACD/${fileName}`
+                        const newFilePath = `${pathOfCustomer}/${year}/ACD/${nameOfCustomer} - ACD EDC - ${correctDate}${pathext}`
+                        const oldFileName = `${nameOfCustomer}/${year}/ACD/${fileName}`
+                        const newFileName = `${nameOfCustomer}/${year}/ACD/${nameOfCustomer} - ACD EDC - ${correctDate}${pathext}`
 
-                    
-                    await fs.rename(oldFilePath, newFilePath, async function (err) {
-                        if (err) console.log('ERROR: ' + err);
-                        console.log(clc.red(oldFileName) + " --> " + clc.green(newFileName));
-                    });
+
+                        await fs.rename(oldFilePath, newFilePath, async function (err) {
+                            if (err) console.log('ERROR: ' + err);
+                            console.log(clc.red(oldFileName) + " --> " + clc.green(newFileName));
+                        });
+                    } else {
+                        console.log(`Renommage ignoré (Modèle déjà appliqué) - ${fileName}`)
+                    }
                 } else {
-                    console.log(`Renommage ignoré (Modèle déjà appliqué) - ${fileName}`)
+                    console.log(clc.red(`Renommage ignoré car pas de date inclus (Formats testés: 'YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY') - ${fileName}`));
                 }
-            } else {
-                console.log(clc.red(`Renommage ignoré car pas de date inclus (Formats testés: 'YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY') - ${fileName}`));
-            }
             }
 
             // Rename decompte
             const decompte_conditions = ['décompte', 'decompte'];
             if (decompte_conditions.some(condition => fileName.toLowerCase().includes(condition))) {
+                console.log(splitFileName_decompte)
                 let correctDate;
-                await splitFileName.forEach(index => {
-                    if (moment(index, ['YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY'])) {
-                        correctDate = moment(index, ['YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY']).format('YYYY.MM.DD')
+                await splitFileName_decompte.forEach(index => {
+                    if (moment(index, ['YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY'], true).isValid()) {
+                        correctDate = moment(index, ['YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY'], true).format('YYYY.MM.DD')
                     }
                 })
                 if (correctDate) {
-                const pathext = await path.extname(`${pathOfCustomer}/${year}/ACD/${fileName}`);
-                if (fileName !== `${nameOfCustomer} - ACD décompte - ${correctDate}${pathext}`) {
-                    const oldFilePath = `${pathOfCustomer}/${year}/ACD/${fileName}`
-                    const newFilePath = `${pathOfCustomer}/${year}/ACD/${nameOfCustomer} - ACD décompte - ${correctDate}${pathext}`
-                    const oldFileName = `${nameOfCustomer}/${year}/ACD/${fileName}`
-                    const newFileName = `${nameOfCustomer}/${year}/ACD/${nameOfCustomer} - ACD décompte - ${correctDate}${pathext}`
+                    const pathext = await path.extname(`${pathOfCustomer}/${year}/ACD/${fileName}`);
+                    if (fileName !== `${nameOfCustomer} - ACD décompte - ${correctDate}${pathext}`) {
+                        const oldFilePath = `${pathOfCustomer}/${year}/ACD/${fileName}`
+                        const newFilePath = `${pathOfCustomer}/${year}/ACD/${nameOfCustomer} - ACD décompte - ${correctDate}${pathext}`
+                        const oldFileName = `${nameOfCustomer}/${year}/ACD/${fileName}`
+                        const newFileName = `${nameOfCustomer}/${year}/ACD/${nameOfCustomer} - ACD décompte - ${correctDate}${pathext}`
 
-                    
-                    await fs.rename(oldFilePath, newFilePath, async function (err) {
-                        if (err) console.log('ERROR: ' + err);
-                        console.log(clc.red(oldFileName) + " --> " + clc.green(newFileName));
-                    });
+
+                        await fs.rename(oldFilePath, newFilePath, async function (err) {
+                            if (err) console.log('ERROR: ' + err);
+                            console.log(clc.red(oldFileName) + " --> " + clc.green(newFileName));
+                        });
+                    } else {
+                        console.log(`Renommage ignoré (Modèle déjà appliqué) - ${fileName}`)
+                    }
                 } else {
-                    console.log(`Renommage ignoré (Modèle déjà appliqué) - ${fileName}`)
+                    console.log(clc.red(`Renommage ignoré car pas de date inclus (Formats testés: 'YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY') - ${fileName}`));
                 }
-            } else {
-                console.log(clc.red(`Renommage ignoré car pas de date inclus (Formats testés: 'YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY') - ${fileName}`));
-            }
             }
         });
     });
