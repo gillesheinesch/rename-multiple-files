@@ -9,9 +9,13 @@ const moment = require('moment')
 function getCustomer() {
     const nameOfCustomer = prompt("Nom du client: ");
     fs.readdir(`./test/${nameOfCustomer}`, (err, files) => {
-        if (err) return console.log(clc.red('Le client n\'a pas pu être trouvé!'))
-        console.log(clc.green(`Client "${nameOfCustomer}" trouvé avec succès! \n`))
-        executeScript(`./test/${nameOfCustomer}`, nameOfCustomer);
+        if (err) return console.log(clc.red('Le client n\'a pas pu être trouvé!'));
+        console.log(clc.green(`Client "${nameOfCustomer}" trouvé avec succès! \n`));
+
+        let nameWithoutID = nameOfCustomer.split(' ')
+        nameWithoutID.pop();
+        nameWithoutID = nameWithoutID.join(' ')
+        executeScript(`./test/${nameOfCustomer}`, nameWithoutID);
     });
 }
 
@@ -44,7 +48,6 @@ function modifyFiles_ACD(pathOfCustomer, nameOfCustomer, year) {
             const fileNameWithoutextname = fileName.replace(/\.[^/.]+$/, "");
             const splitFileName_edc = fileNameWithoutextname.split(" ");
             const splitFileName_decompte = fileNameWithoutextname.split(" ");
-            console.log(splitFileName_decompte)
 
             // Rename avances
             const avances_conditions = ['avance', 'avances', 'advance', 'd\'avance', 'd\'avances'];
@@ -100,7 +103,6 @@ function modifyFiles_ACD(pathOfCustomer, nameOfCustomer, year) {
             // Rename decompte
             const decompte_conditions = ['décompte', 'decompte'];
             if (decompte_conditions.some(condition => fileName.toLowerCase().includes(condition))) {
-                console.log(splitFileName_decompte)
                 let correctDate;
                 await splitFileName_decompte.forEach(index => {
                     if (moment(index, ['YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY'], true).isValid()) {
