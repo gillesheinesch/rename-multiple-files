@@ -6,10 +6,13 @@ const prompt = require("prompt-sync")({
 var path = require('path')
 const moment = require('moment')
 
+var packageJSON = require('./package.json');
+
 function getCustomer() {
-    const nameOfCustomer = prompt("Nom du client: ");
+    console.log(clc.green.bold(`GTF - Lancement du logiciel de renommage (${packageJSON.version}) - © Gilles HEINESCH`))
+    const nameOfCustomer = prompt(clc.bold("Nom du client: "));
     fs.readdir(`./test/${nameOfCustomer}`, (err, files) => {
-        if (err) return console.log(clc.red('Le client n\'a pas pu être trouvé!'));
+        if (err) return console.log(clc.red.bold('Le client n\'a pas pu être trouvé!'));
         console.log(clc.green(`Client "${nameOfCustomer}" trouvé avec succès! \n`));
 
         let nameWithoutID = nameOfCustomer.split(' ')
@@ -64,7 +67,7 @@ function modifyFiles_ACD(pathOfCustomer, nameOfCustomer, year) {
 
                     await fs.rename(oldFilePath, newFilePath, async function (err) {
                         if (err) console.log('ERROR: ' + err);
-                        console.log(clc.red(oldFileName) + " --> " + clc.green(newFileName));
+                        console.log(clc.red.bold(oldFileName) + " --> " + clc.green(newFileName));
                     });
                 } else {
                     console.log(`Renommage ignoré (Modèle déjà appliqué) - ${fileName}`)
@@ -91,13 +94,13 @@ function modifyFiles_ACD(pathOfCustomer, nameOfCustomer, year) {
 
                         await fs.rename(oldFilePath, newFilePath, async function (err) {
                             if (err) console.log('ERROR: ' + err);
-                            console.log(clc.red(oldFileName) + " --> " + clc.green(newFileName));
+                            console.log(clc.red.bold(oldFileName) + " --> " + clc.green(newFileName));
                         });
                     } else {
                         console.log(`Renommage ignoré (Modèle déjà appliqué) - ${fileName}`)
                     }
                 } else {
-                    console.log(clc.red(`Renommage ignoré car pas de date inclus (Formats testés: 'YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY') - ${fileName}`));
+                    console.log(clc.red.bold(`Renommage ignoré car pas de date inclus (Formats testés: 'YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY') - ${fileName}`));
                 }
             }
 
@@ -121,13 +124,13 @@ function modifyFiles_ACD(pathOfCustomer, nameOfCustomer, year) {
 
                         await fs.rename(oldFilePath, newFilePath, async function (err) {
                             if (err) console.log('ERROR: ' + err);
-                            console.log(clc.red(oldFileName) + " --> " + clc.green(newFileName));
+                            console.log(clc.red.bold(oldFileName) + " --> " + clc.green(newFileName));
                         });
                     } else {
                         console.log(`Renommage ignoré (Modèle déjà appliqué) - ${fileName}`)
                     }
                 } else {
-                    console.log(clc.red(`Renommage ignoré car pas de date inclus (Formats testés: 'YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY') - ${fileName}`));
+                    console.log(clc.red.bold(`Renommage ignoré car pas de date inclus (Formats testés: 'YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY') - ${fileName}`));
                 }
             }
         });
@@ -161,13 +164,13 @@ function modifyFiles_AED(pathOfCustomer, nameOfCustomer, year) {
 
                         await fs.rename(oldFilePath, newFilePath, async function (err) {
                             if (err) console.log('ERROR: ' + err);
-                            console.log(clc.red(oldFileName) + " --> " + clc.green(newFileName));
+                            console.log(clc.red.bold(oldFileName) + " --> " + clc.green(newFileName));
                         });
                     } else {
                         console.log(`Renommage ignoré (Modèle déjà appliqué) - ${fileName}`)
                     }
                 } else {
-                    console.log(clc.red(`Renommage ignoré car pas de date inclus (Formats testés: 'YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY') - ${fileName}`));
+                    console.log(clc.red.bold(`Renommage ignoré car pas de date inclus (Formats testés: 'YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY') - ${fileName}`));
                 }
             }
 
@@ -191,13 +194,13 @@ function modifyFiles_AED(pathOfCustomer, nameOfCustomer, year) {
 
                         await fs.rename(oldFilePath, newFilePath, async function (err) {
                             if (err) console.log('ERROR: ' + err);
-                            console.log(clc.red(oldFileName) + " --> " + clc.green(newFileName));
+                            console.log(clc.red.bold(oldFileName) + " --> " + clc.green(newFileName));
                         });
                     } else {
                         console.log(`Renommage ignoré (Modèle déjà appliqué) - ${fileName}`)
                     }
                 } else {
-                    console.log(clc.red(`Renommage ignoré car pas de date inclus (Formats testés: 'YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY') - ${fileName}`));
+                    console.log(clc.red.bold(`Renommage ignoré car pas de date inclus (Formats testés: 'YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY') - ${fileName}`));
                 }
             }
         });
