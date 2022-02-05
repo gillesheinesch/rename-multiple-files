@@ -38,6 +38,7 @@ function modifyFiles_ACD(pathOfCustomer, nameOfCustomer, year) {
                 await splitFileName_edc.forEach(index => {
                     if (moment(index, ['YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY'], true).isValid()) {
                         correctDate = moment(index, ['YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY'], true).format('YYYY.MM.DD')
+                        
                     }
                 })
                 if (correctDate) {
@@ -68,6 +69,7 @@ function modifyFiles_ACD(pathOfCustomer, nameOfCustomer, year) {
                 await splitFileName_decompte.forEach(index => {
                     if (moment(index, ['YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY'], true).isValid()) {
                         correctDate = moment(index, ['YYYY.MM.DD', 'DD.MM.YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY'], true).format('YYYY.MM.DD')
+                        
                     }
                 })
                 if (correctDate) {
