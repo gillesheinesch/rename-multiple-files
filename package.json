@@ -21,7 +21,9 @@
     "cli-color": "^2.0.1",
     "fs": "^0.0.1-security",
     "moment": "^2.29.1",
+    "moment-duration-format": "^2.3.2",
     "path": "^0.12.7",
-    "prompt-sync": "^4.2.0"
+    "prompt-sync": "^4.2.0",
+    "winston": "^3.7.2"
   }
 }
